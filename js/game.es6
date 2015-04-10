@@ -9,42 +9,30 @@ var SPACE_KEY = 32;
 
 var system = {
     spin: -Math.PI / 2,
-    r: 140
+    r: 700
 };
 
 var player = new Player();
 
-var planets = [
-    new Planet({
-        spin: Math.PI / 2,
-        position: 0,
-        name: 'Start'
-    }),
-    new Planet({
-        spin: 0,
-        position: Math.PI * 2 * 1 / 6,
-        name: 'Earth'
-    }),
-    new Planet({
-        spin: 0,
-        position: Math.PI * 2 * 2 / 6,
-        name: 'Jupiter'
-    }),
-    new Planet({
-        spin: 0,
-        position: Math.PI * 2 * 3 / 6,
-        name: 'Plooto'
-    }),
-    new Planet({
-        spin: 0,
-        position: Math.PI * 2 * 4 / 6,
-        name: 'Mars'
-    }),
-    new Planet({
-        spin: 0,
-        position: Math.PI * 2 * 5 / 6
-    })
+var planetNames = [
+    'Start',
+    'Earth',
+    'Jupiter',
+    'Plooton',
+    'Mars'
 ];
+
+var planets = [];
+
+var PLANETS_COUNT = 20;
+
+for (var i = 0; i < PLANETS_COUNT; ++i) {
+    planets.push(new Planet({
+        position: Math.PI * 2 * i / PLANETS_COUNT,
+        name: planetNames[i],
+        radius: 20 + Math.floor(Math.random() * 30)
+    }));
+}
 
 player.landOnPlanet(planets[0]);
 
@@ -56,7 +44,7 @@ function render() {
     ctx.translate(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
 
     ctx.scale(1.4, 1.4);
-    ctx.translate(0, 190);
+    ctx.translate(0, system.r * 1.1);
 
     ctx.rotate(system.spin);// - Math.PI * 0.15);
 
