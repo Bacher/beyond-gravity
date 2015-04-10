@@ -6,13 +6,14 @@ class Planet {
         this.name = opt.name || 'unknown';
         this.spinSpeed = 0.08;
         this.radius = opt.radius || 40;
+        this.distance = opt.distance;
 
         this.size = {};
         this.size.x = this.size.y = this.radius * 2;
     }
 
     draw() {
-        var planetPosition = calcPlanetPosition(system.r, this.position);
+        var planetPosition = this.getPosition();
 
         ctx.save();
 
@@ -38,7 +39,13 @@ class Planet {
     }
 
     getPosition() {
-        return calcPlanetPosition(system.r, this.position);
+        var sin = Math.sin(this.position);
+        var cos = Math.cos(this.position);
+
+        return {
+            x: this.distance * cos,
+            y: this.distance * sin
+        };
     }
 
     getPlayerPosition(player) {

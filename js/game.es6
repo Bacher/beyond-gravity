@@ -30,7 +30,8 @@ for (var i = 0; i < PLANETS_COUNT; ++i) {
     planets.push(new Planet({
         position: Math.PI * 2 * i / PLANETS_COUNT,
         name: planetNames[i],
-        radius: 20 + Math.floor(Math.random() * 30)
+        radius: 20 + Math.random() * 30,
+        distance: system.r * (0.9 + Math.random() * 0.2)
     }));
 }
 
