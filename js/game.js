@@ -46,6 +46,8 @@ var planets = [
     })
 ];
 
+player.landOnPlanet(planets[0]);
+
 function render() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
@@ -70,29 +72,12 @@ function render() {
 }
 
 setInterval(function() {
-    planets.forEach(function(planet, i) {
-        if (player.state !== 'jumping' || player.onPlanet !== i) {
-            planet.spin += planet.spinSpeed;
-        }
+    planets.forEach(function(planet) {
+        planet.spin += planet.spinSpeed;
     });
 
-    if (player.state === 'flying') {
-        player.force.y += 0.5;
-
-        player.position.x += player.force.x;
-        player.position.y += player.force.y;
-
-        var planetIndex;
-        if ((planetIndex = player.checkCollision(planets))) {
-
-            var planet = planets[planetIndex];
-            player.state = 'onplanet';
-            player.onPlanet = planetIndex;
-
-            player.landingSpin = Math.atan(player.force.y / player.force.x) - planet.spin;
-
-            console.log(player);
-        }
+    if (!player.onPlanet) {
+        player.tickFlight();
     }
 
     render();
@@ -101,8 +86,6 @@ setInterval(function() {
 document.addEventListener('keydown', function(e) {
     if (e.which === SPACE_KEY) {
         e.preventDefault();
-
-        player.state = 'jumping';
     }
 });
 
@@ -110,18 +93,8 @@ document.addEventListener('keyup', function(e) {
     if (e.which === SPACE_KEY) {
         e.preventDefault();
 
-        if (player.state === 'jumping') {
-            var planet = planets[player.onPlanet];
-
-            var pos = planet.getPlayerPosition(player);
-
-            player.position.x = pos.position.x;
-            player.position.y = pos.position.y;
-
-            player.force.x = player.jumpPower * Math.cos(pos.direction);
-            player.force.y = player.jumpPower * Math.sin(pos.direction);
-
-            player.state = 'flying'
+        if (player.onPlanet) {
+            player.makeJump();
         }
     }
 });

@@ -36,21 +36,18 @@ Planet.prototype.draw = function() {
     ctx.restore();
 };
 
-Planet.prototype.calcPosition = function() {
+Planet.prototype.getPosition = function() {
     return calcPlanetPosition(system.r, this.position);
 };
 
 Planet.prototype.getPlayerPosition = function(player) {
-    var planetPosition = this.calcPosition();
+    var planetPosition = this.getPosition();
 
     var playerPositionOnPlanet =
         calcPlanetPosition(this.radius + player.size.y / 2, player.landingSpin + this.spin);
 
     return {
-        position: {
-            x: planetPosition.x + playerPositionOnPlanet.x,
-            y: planetPosition.y + playerPositionOnPlanet.y
-        },
-        direction: player.landingSpin + this.spin
-    }
+        x: planetPosition.x + playerPositionOnPlanet.x,
+        y: planetPosition.y + playerPositionOnPlanet.y
+    };
 };
