@@ -94,10 +94,18 @@ Player.prototype.makeJump = function() {
 };
 
 Player.prototype.tickFlight = function() {
-    this.force.y += 0.5;
+    this.force.x += Math.sin(system.spin);
+    this.force.y += Math.cos(system.spin);
 
     this.position.x += this.force.x;
     this.position.y += this.force.y;
+
+    var sum = 0;
+    if (this.position.x < 0) {
+        sum = Math.PI;
+    }
+
+    system.spin = -Math.PI / 2 - Math.atan(this.position.y / this.position.x) + sum;
 
     var planet = this.checkCollision(planets);
 

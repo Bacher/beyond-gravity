@@ -8,7 +8,7 @@ var CANVAS_HEIGHT = 400;
 var SPACE_KEY = 32;
 
 var system = {
-    spin: 0,
+    spin: -Math.PI / 2,
     r: 140
 };
 
@@ -54,8 +54,11 @@ function render() {
     ctx.save();
 
     ctx.translate(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
-    //ctx.translate(0, system.r * 1.4);
-    ctx.rotate(system.spin);
+
+    ctx.scale(1.4, 1.4);
+    ctx.translate(0, 190);
+
+    ctx.rotate(system.spin);// - Math.PI * 0.15);
 
     planets.forEach(function(planet) {
         ctx.save();
