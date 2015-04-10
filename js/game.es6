@@ -68,7 +68,6 @@ function render() {
     ctx.restore();
 
     ctx.restore();
-
 }
 
 setInterval(function() {
