@@ -47,7 +47,7 @@ function render() {
     ctx.scale(1.4, 1.4);
     ctx.translate(0, system.r * 1.1);
 
-    ctx.rotate(system.spin);// - Math.PI * 0.15);
+    ctx.rotate(system.spin - Math.PI * 0.04);
 
     planets.forEach(function(planet) {
         ctx.save();
